@@ -5,7 +5,7 @@ import { IGameUnit, isUnit } from "./interfaces/IGameUnit";
 
 export
 const enum StopMode {
-    WIN = 'YOU WON',
+    WIN = 'YOU WIN',
     PAUSE = 'PAUSE',
     LOSE = 'YOU LOSE',
 }
