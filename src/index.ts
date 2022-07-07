@@ -11,6 +11,17 @@ import { FoodManager } from './FoodManader';
 import { randomInt } from './utils';
 import { IGameUnit } from './interfaces/IGameUnit';
 
+/**
+ * Would be nice to add:
+ * * * Docs
+ * * * Bot manager
+ * * * Parent-child relationship
+ * * * Customize appearence
+ * * * Restart functionality
+ * * * Scores
+ * * * Increase probability to win)
+ */
+
 let botsNumberInGame = 0;
 
 const game =
@@ -32,11 +43,10 @@ game.addChild(
 );
 
 function generateBots(botsNumberToCreate = Number(randomInt(2, 4).toFixed())) {
-    botsNumberInGame += botsNumberToCreate;
-    const onBotAbsorbing = () => --botsNumberInGame === 0 && game.stop(StopMode.WIN);
     const bots = new Array<IGameUnit>(botsNumberToCreate);
     const botRadius = 10;
     const halfBotRadius = botRadius / 2;
+    const onBotAbsorbing = () => --botsNumberInGame === 0 && game.stop(StopMode.WIN);
     for (let i = 0; i < botsNumberToCreate; ++i) {
         const x = randomInt(halfBotRadius, game.view.width - halfBotRadius);
         const y = randomInt(halfBotRadius, game.view.height - halfBotRadius);
@@ -44,6 +54,7 @@ function generateBots(botsNumberToCreate = Number(randomInt(2, 4).toFixed())) {
         bot.once(ControlledGameUnitEvents.ABSORBED, onBotAbsorbing);
         bots[i] = bot;
     }
+    botsNumberInGame += botsNumberToCreate;
 
     return bots;
 }
