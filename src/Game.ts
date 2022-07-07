@@ -2,6 +2,7 @@ import * as pixi from "pixi.js";
 import { ControlledGameUnit } from "./ControlledGameUnit";
 import { IGameObject } from "./interfaces/IGameObject";
 import { IGameUnit, isUnit } from "./interfaces/IGameUnit";
+import { Graphics } from "pixi.js";
 
 export
 const enum StopMode {
@@ -16,12 +17,29 @@ const TextColors = {
     [StopMode.LOSE]: '0xff0000',
 }
 
+const TextStyle: Partial<pixi.ITextStyle> = {
+    fontFamily: 'Arial',
+    dropShadow: true,
+    dropShadowAlpha: 0.8,
+    dropShadowAngle: 2.1,
+    dropShadowBlur: 4,
+    dropShadowColor: '0x111111',
+    dropShadowDistance: 10,
+    fill: [TextColors[StopMode.WIN]],
+    stroke: '0xf0f0f0',
+    fontSize: 60,
+    fontWeight: 'lighter',
+    lineJoin: 'round',
+    strokeThickness: 12,
+};
+
 export
 class Game {
 
     protected _gameObjects = new Array<IGameObject>();
     protected _gameUnits = new Array<IGameUnit>();
-    protected _message?: pixi.Text;
+    protected _curtain = new pixi.Graphics();
+    protected _curtainMessage: pixi.Text;
 
     get world() {
         return this._app.stage;
@@ -35,10 +53,15 @@ class Game {
         protected _app: pixi.Application,
         protected _document: HTMLElement,
     ) {
+        
+        pixi.filters.BlurFilter
         this._document.appendChild(this._app.view);
         this.loop = this.loop.bind(this);
         this._app.ticker.add(this.loop);
-        this._app.screen
+        this._curtain = new Graphics();
+        this._curtainMessage = new pixi.Text(StopMode.WIN, new pixi.TextStyle(TextStyle));
+        this._curtainMessage.x = (this.view.width - this._curtainMessage.getBounds().width) / 2;
+        this._curtainMessage.y = (this.view.height - this._curtainMessage.getBounds().height) / 2;
     }
 
     addChild(...gameObjects: IGameObject[]) {
@@ -62,34 +85,22 @@ class Game {
     }
 
     run() {
-        if (this._message) {
-            this.world.removeChild(this._message);
-            this._message = undefined;
-        }
+        this._curtain.clear();
+        this.world.removeChild(this._curtain);
         this._app.ticker.add(this.loop);
     }
 
     stop(mode: StopMode) {
         this._app.ticker.remove(this.loop);
-        const messageStyle = new pixi.TextStyle({
-            fontFamily: 'Arial',
-            dropShadow: true,
-            dropShadowAlpha: 0.8,
-            dropShadowAngle: 2.1,
-            dropShadowBlur: 4,
-            dropShadowColor: '0x111111',
-            dropShadowDistance: 10,
-            fill: [TextColors[mode]],
-            stroke: '0xf0f0f0',
-            fontSize: 60,
-            fontWeight: 'lighter',
-            lineJoin: 'round',
-            strokeThickness: 12,
-        });
-        this._message = new pixi.Text(mode, messageStyle);
-        this._message.x = (this.view.width - this._message.getBounds().width) / 2;
-        this._message.y = (this.view.height - this._message.getBounds().height) / 2;
-        this.world.addChild(this._message);
+        this._curtain
+            .lineStyle(10, Number(TextColors[mode]), 1)
+            .beginFill(0xf0f0f0, 0.5)
+            .drawRect(0, 0, this.view.width, this.view.height)
+            .endFill();
+        this._curtainMessage.text = mode;
+        this._curtainMessage.style.fill = [TextColors[mode]];
+        this._curtain.addChild(this._curtainMessage);
+        this.world.addChild(this._curtain);
     }
 
     protected loop(dt: number) {
@@ -113,9 +124,5 @@ class Game {
 
 }
 
-const pop = <T>(array: Array<T> | pixi.Container, index: number) => {
-    Array.isArray(array) ?
-        index >= 0 && index < array.length && array.splice(index, 1) :
-        index >= 0 && index < array.children.length && array.removeChildAt(index);
-};
+const pop = <T>(array: Array<T>, index: number) => index >= 0 && index < array.length && array.splice(index, 1);
 
