@@ -1,15 +1,15 @@
 import * as pixi from 'pixi.js'
 import '@pixi/math-extras';
 import '@pixi/interaction'
-import { Circle } from './Circle';
+import { Circle } from './src/Circle';
 import {
     ControlledGameUnit, ControlledGameUnitEvents,
     DistanceController, MouseController
-} from './ControlledGameUnit';
-import { Game, StopMode } from './Game';
-import { FoodManager } from './FoodManader';
-import { randomInt } from './utils';
-import { IGameUnit } from './interfaces/IGameUnit';
+} from './src/ControlledGameUnit';
+import { Game, StopMode } from './src/Game';
+import { FoodManager } from './src/FoodManader';
+import { randomInt } from './src/utils';
+import { IGameUnit } from './src/interfaces/IGameUnit';
 
 /**
  * Would be nice to add:
