@@ -20,6 +20,7 @@ import { IGameUnit } from './interfaces/IGameUnit';
  * * * Restart functionality
  * * * Scores
  * * * Increase probability to win)
+ * * * Colission with canvas edges
  */
 
 let botsNumberInGame = 0;
