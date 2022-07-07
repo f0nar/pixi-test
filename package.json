@@ -1,0 +1,30 @@
+{
+  "name": "pixi-first-test",
+  "version": "1.0.0",
+  "description": "my first test app with pixi.js",
+  "main": "index.js",
+  "scripts": {
+    "start": "webpack serve --config ./webpack.common.js --stats-error-details",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "pixi.js",
+    "game"
+  ],
+  "author": "Vladyslav Poh",
+  "license": "ISC",
+  "dependencies": {
+    "@pixi/interaction": "^6.4.2",
+    "@pixi/math-extras": "^6.4.2",
+    "pixi.js": "^6.4.2"
+  },
+  "devDependencies": {
+    "html-webpack-plugin": "^5.5.0",
+    "ts-loader": "^9.3.1",
+    "typescript": "^4.7.4",
+    "webpack": "^5.73.0",
+    "webpack-cli": "^4.10.0",
+    "webpack-dev-middleware": "^5.3.3",
+    "webpack-dev-server": "^4.9.3"
+  }
+}
