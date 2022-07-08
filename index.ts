@@ -7,7 +7,7 @@ import {
     DistanceController, MouseController
 } from './src/ControlledGameUnit';
 import { Game, StopMode } from './src/Game';
-import { FoodManager } from './src/FoodManader';
+import { FoodManager } from './src/FoodManager';
 import { randomInt } from './src/utils';
 import { IGameUnit } from './src/interfaces/IGameUnit';
 
