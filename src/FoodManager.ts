@@ -18,7 +18,7 @@ class FoodManager
     ) {
         super();
         this._game.addChild(this);
-        this.generateFood(randomInt(10, 30));
+        this._generateFood(randomInt(10, 30));
     }
 
     update(dt: number): void {
@@ -26,11 +26,11 @@ class FoodManager
         while (this._dt >= this._updateDt) {
             this._dt -= this._updateDt;
             this._updateDt += 5;
-            this.generateFood(randomInt(2, 5));
+            this._generateFood(randomInt(2, 5));
         }
     }
 
-    protected generateFood(foodsNumber: number) {
+    protected _generateFood(foodsNumber: number): void {
         const foodRadius = 5;
         const foodRadiusHalf = foodRadius / 2;
         const xRange = this._game.view.width;

@@ -28,12 +28,12 @@ class ControlledGameUnit extends GameUnit {
         super(unit);
     }
 
-    update(dt: number, other: Array<IGameObject>) {
+    update(dt: number, other: Array<IGameObject>): void {
         const direction = this._controller.getDirection(this, dt, other);
         this.graphic.node.position.add(direction.multiplyScalar(this.speed), this.graphic.node.position);
     }
     
-    absorb(absorbedUnit: IGameUnit) {
+    absorb(absorbedUnit: IGameUnit): void {
         const radius = Number(Math.sqrt(absorbedUnit.graphic.radius).toPrecision());
         this.graphic.radius += radius;
         this.speed = Math.sqrt(this.graphic.radius / 10);
@@ -92,7 +92,7 @@ class MouseController implements DirectionControllerT {
         return this._target.subtract(caller.graphic.node.position).normalize();
     }
 
-    protected updateTarget(event: pixi.InteractionEvent) {
+    protected updateTarget(event: pixi.InteractionEvent): void {
         const eventPosition = event?.data?.global;
         const hypotheticalPosition = eventPosition && new pixi.Point(eventPosition.x, eventPosition.y);
         this._target = hypotheticalPosition && this._game.view.contains(hypotheticalPosition.x, hypotheticalPosition.y) ?

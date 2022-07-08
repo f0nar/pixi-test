@@ -41,11 +41,11 @@ class Game {
     protected _curtain = new pixi.Graphics();
     protected _curtainMessage: pixi.Text;
 
-    get world() {
+    get world(): pixi.Container  {
         return this._app.stage;
     }
 
-    get view() {
+    get view(): pixi.Rectangle {
         return this._app.screen;
     }
 
@@ -56,15 +56,14 @@ class Game {
         
         pixi.filters.BlurFilter
         this._document.appendChild(this._app.view);
-        this.loop = this.loop.bind(this);
-        this._app.ticker.add(this.loop);
+        this._loop = this._loop.bind(this);
         this._curtain = new Graphics();
         this._curtainMessage = new pixi.Text(StopMode.WIN, new pixi.TextStyle(TextStyle));
         this._curtainMessage.x = (this.view.width - this._curtainMessage.getBounds().width) / 2;
         this._curtainMessage.y = (this.view.height - this._curtainMessage.getBounds().height) / 2;
     }
 
-    addChild(...gameObjects: IGameObject[]) {
+    addChild(...gameObjects: IGameObject[]): void {
         for (const gameObject of gameObjects) {
             this._gameObjects.push(gameObject);
             if (isUnit(gameObject)) {
@@ -74,7 +73,7 @@ class Game {
         }  
     }
 
-    removeChild(...gameObjects: IGameObject[]) {
+    removeChild(...gameObjects: IGameObject[]): void {
         for (const gameObject of gameObjects) {
             pop(this._gameObjects, this._gameObjects.indexOf(gameObject));
             if (isUnit(gameObject)) {
@@ -84,14 +83,14 @@ class Game {
         }
     }
 
-    run() {
+    run(): void {
         this._curtain.clear();
         this.world.removeChild(this._curtain);
-        this._app.ticker.add(this.loop);
+        this._app.ticker.add(this._loop);
     }
 
-    stop(mode: StopMode) {
-        this._app.ticker.remove(this.loop);
+    stop(mode: StopMode): void {
+        this._app.ticker.remove(this._loop);
         this._curtain
             .lineStyle(10, Number(TextColors[mode]), 1)
             .beginFill(0xf0f0f0, 0.5)
@@ -103,7 +102,7 @@ class Game {
         this.world.addChild(this._curtain);
     }
 
-    protected loop(dt: number) {
+    protected _loop(dt: number): void {
         const gameObjectsArray = Array.from(this._gameObjects);
         const controlledGameUnits = new Array<ControlledGameUnit>();
         gameObjectsArray.forEach(gameObject => {

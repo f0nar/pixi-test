@@ -3,11 +3,11 @@ import * as pixi from 'pixi.js';
 export
 class Circle {
 
-    get radius() {
+    get radius(): number {
         return this._radius;
     }
 
-    set radius(radius) {
+    set radius(radius: number) {
         if (radius <= 0) throw new Error('Incorrect circle radius');
         this._radius = radius;
         this._updateCircle();
@@ -28,7 +28,7 @@ class Circle {
         this._updateCircle().position.set(x, y);
     }
 
-    private _updateCircle() {
+    private _updateCircle(): pixi.DisplayObject {
         this._graphics
             .clear()
             .beginFill(this._color)

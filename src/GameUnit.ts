@@ -12,16 +12,16 @@ class GameUnit
 
     IGameUnit = true;
 
-    get speed() {
+    get speed(): number {
         return this._speed;
     }
 
-    set speed(speed) {
+    set speed(speed: number) {
         if (speed < 0) throw new Error('Incorrect game object speed.');
         this._speed = speed;
     }
 
-    get graphic() {
+    get graphic(): Circle {
         return this._unit;
     }
 
@@ -31,9 +31,9 @@ class GameUnit
         super();
     }
 
-    update(dt: number, other: Array<IGameObject>) { };
+    update(dt: number, other: Array<IGameObject>): void { };
 
-    isCovering(overlaped: IGameUnit) {
+    isCovering(overlaped: IGameUnit): boolean {
         const centerDistance = this.graphic.node.position.subtract(overlaped.graphic.node.position).magnitude();
         return this.graphic.radius >= overlaped.graphic.radius + centerDistance;
     }
