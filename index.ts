@@ -21,6 +21,7 @@ import { IGameUnit } from './src/interfaces/IGameUnit';
  * * * Scores
  * * * Increase probability to win)
  * * * Colission with canvas edges
+ * * * Use target point insted of direction in ControlledGameUnit
  */
 
 let botsNumberInGame = 0;
