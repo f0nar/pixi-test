@@ -47,7 +47,6 @@ export
 class DistanceController implements DirectionControllerT {
 
     getDirection(caller: ControlledGameUnit, dt: number, other: IGameUnit[]): pixi.Point {
-        return new pixi.Point(0, 0);
         const totalDirection = new pixi.Point(0, 0);
         if (!Array.isArray(other)) { return totalDirection };
         const unitsData =

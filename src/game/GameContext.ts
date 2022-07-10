@@ -102,7 +102,7 @@ class GameContext extends pixi.utils.EventEmitter {
 
     protected _removeChildren(layer: GameLayer): void {
         layer.objects.splice(0);
-        layer.objects.splice(0);
+        layer.units.splice(0);
         layer.pixiContainer.removeChildren();
     }
 
