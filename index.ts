@@ -12,10 +12,8 @@ import { BotManager, BotManagerEvents } from './src/managers/BotManager';
 /**
  * Would be nice to add:
  * * * Docs
- * * * Bot manager
  * * * Parent-child relationship
  * * * Customize appearence
- * * * Restart functionality
  * * * Scores
  * * * Increase probability to win)
  * * * Colission with canvas edges
