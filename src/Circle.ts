@@ -1,7 +1,13 @@
 import * as pixi from 'pixi.js';
+import { IGameGraphics } from './interfaces/IGameGraphics';
+import { IGameObject } from './interfaces/IGameObject';
 
 export
-class Circle {
+class Circle
+    extends pixi.utils.EventEmitter
+    implements IGameGraphics {
+
+    IGameGraphics = true;
 
     get radius(): number {
         return this._radius;
@@ -25,8 +31,11 @@ class Circle {
         private _radius: number,
         private _color: number,
     ) {
+        super();
         this._updateCircle().position.set(x, y);
     }
+
+    update(dt: number, other: IGameObject[]): void { }
 
     private _updateCircle(): pixi.DisplayObject {
         this._graphics

@@ -6,7 +6,7 @@ import {
     ControlledGameUnit, ControlledGameUnitEvents,
     DistanceController, MouseController
 } from './src/ControlledGameUnit';
-import { Game, StopMode } from './src/Game';
+import { Game } from './src/Game';
 import { FoodManager } from './src/FoodManager';
 import { randomInt } from './src/utils';
 import { IGameUnit } from './src/interfaces/IGameUnit';
@@ -41,14 +41,15 @@ game.addChild(
     new FoodManager(game),
     ...generateBots(),
     new ControlledGameUnit(new Circle(400, 300, 10, 0xff0000), new MouseController(game))
-        .once(ControlledGameUnitEvents.ABSORBED, () => game.stop(StopMode.LOSE)),
 );
+
+game.run();
 
 function generateBots(botsNumberToCreate = Number(randomInt(2, 4).toFixed())) {
     const bots = new Array<IGameUnit>(botsNumberToCreate);
     const botRadius = 10;
     const halfBotRadius = botRadius / 2;
-    const onBotAbsorbing = () => --botsNumberInGame === 0 && game.stop(StopMode.WIN);
+    const onBotAbsorbing = () => --botsNumberInGame === 0 ;//&& game.stop(StopMode.WIN);
     for (let i = 0; i < botsNumberToCreate; ++i) {
         const x = randomInt(halfBotRadius, game.view.width - halfBotRadius);
         const y = randomInt(halfBotRadius, game.view.height - halfBotRadius);

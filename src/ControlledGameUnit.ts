@@ -1,6 +1,6 @@
 import * as pixi from 'pixi.js';
 import { Circle } from "./Circle";
-import { Game } from './Game';
+import { Game, GAME_EVENTS } from './Game';
 import { GameUnit } from "./GameUnit";
 import { IGameObject } from './interfaces/IGameObject';
 import { IGameUnit } from './interfaces/IGameUnit';
@@ -83,8 +83,8 @@ class MouseController implements DirectionControllerT {
     constructor(
         protected _game: Game,
     ) {
-        this._game.world.interactive = true;
-        this._game.world.on('pointermove', this.updateTarget.bind(this));
+        this._updateTarget = this._updateTarget.bind(this);
+        this._game.on(GAME_EVENTS.MOUSE_MOVE, this._updateTarget);
     }
 
     getDirection(caller: GameUnit, dt: number, other: GameUnit[]): pixi.Point {
@@ -92,7 +92,7 @@ class MouseController implements DirectionControllerT {
         return this._target.subtract(caller.graphic.node.position).normalize();
     }
 
-    protected updateTarget(event: pixi.InteractionEvent): void {
+    protected _updateTarget(event: pixi.InteractionEvent): void {
         const eventPosition = event?.data?.global;
         const hypotheticalPosition = eventPosition && new pixi.Point(eventPosition.x, eventPosition.y);
         this._target = hypotheticalPosition && this._game.view.contains(hypotheticalPosition.x, hypotheticalPosition.y) ?
