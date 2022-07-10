@@ -1,9 +1,9 @@
 import * as pixi from 'pixi.js';
-import { Circle } from './Circle';
-import { GameUnit } from './GameUnit';
-import { IGameObject } from "./interfaces/IGameObject";
-import { randomInt } from './utils';
-import { Game } from './Game';
+import { Circle } from '../graphics/Circle';
+import { GameUnit } from '../units/GameUnit';
+import { IGameObject } from "../interfaces/IGameObject";
+import { randomInt } from '../utils/utils';
+import { GameContext } from '../game/GameContext';
 
 export
 class FoodManager
@@ -14,11 +14,11 @@ class FoodManager
     protected _dt = 0;
 
     constructor(
-        protected _game: Game,
+        protected _game: GameContext,
+        protected _foodRadius: number,
     ) {
         super();
         this._game.addChild(this);
-        this._generateFood(randomInt(10, 30));
     }
 
     update(dt: number): void {
@@ -26,19 +26,18 @@ class FoodManager
         while (this._dt >= this._updateDt) {
             this._dt -= this._updateDt;
             this._updateDt += 5;
-            this._generateFood(randomInt(2, 5));
+            this.addFood(randomInt(2, 5));
         }
     }
 
-    protected _generateFood(foodsNumber: number): void {
-        const foodRadius = 5;
-        const foodRadiusHalf = foodRadius / 2;
+    addFood(foodsNumber: number): void {
+        const foodRadiusHalf = this._foodRadius / 2;
         const xRange = this._game.view.width;
         const yRange = this._game.view.height;
         for (let i = 0; i < foodsNumber; ++i) {
             const x = randomInt(foodRadiusHalf, xRange - foodRadiusHalf);
             const y = randomInt(foodRadiusHalf, yRange - foodRadiusHalf);
-            const food = new GameUnit(new Circle(x, y, foodRadius, 0x00ff00));
+            const food = new GameUnit(new Circle(x, y, this._foodRadius, 0x00ff00));
             this._game.addChild(food);
         }
     }

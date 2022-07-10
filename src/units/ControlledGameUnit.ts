@@ -1,9 +1,9 @@
 import * as pixi from 'pixi.js';
-import { Circle } from "./Circle";
-import { Game, GAME_EVENTS } from './Game';
+import { Circle } from "../graphics/Circle";
+import { GameContext, GameEvents } from '../game/GameContext';
 import { GameUnit } from "./GameUnit";
-import { IGameObject } from './interfaces/IGameObject';
-import { IGameUnit } from './interfaces/IGameUnit';
+import { IGameObject } from '../interfaces/IGameObject';
+import { IGameUnit } from '../interfaces/IGameUnit';
 
 export
 const enum ControlledGameUnitEvents {
@@ -47,6 +47,7 @@ export
 class DistanceController implements DirectionControllerT {
 
     getDirection(caller: ControlledGameUnit, dt: number, other: IGameUnit[]): pixi.Point {
+        return new pixi.Point(0, 0);
         const totalDirection = new pixi.Point(0, 0);
         if (!Array.isArray(other)) { return totalDirection };
         const unitsData =
@@ -81,10 +82,10 @@ class MouseController implements DirectionControllerT {
     protected _target?: pixi.Point;
 
     constructor(
-        protected _game: Game,
+        protected _game: GameContext,
     ) {
         this._updateTarget = this._updateTarget.bind(this);
-        this._game.on(GAME_EVENTS.MOUSE_MOVE, this._updateTarget);
+        this._game.on(GameEvents.MOUSE_MOVE, this._updateTarget);
     }
 
     getDirection(caller: GameUnit, dt: number, other: GameUnit[]): pixi.Point {

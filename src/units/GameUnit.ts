@@ -1,7 +1,7 @@
 import * as pixi from 'pixi.js';
-import { Circle } from './Circle';
-import { IGameObject } from './interfaces/IGameObject';
-import { IGameUnit } from './interfaces/IGameUnit';
+import { Circle } from '../graphics/Circle';
+import { IGameObject } from '../interfaces/IGameObject';
+import { IGameUnit } from '../interfaces/IGameUnit';
 
 export 
 class GameUnit

@@ -1,6 +1,6 @@
 import * as pixi from 'pixi.js';
-import { IGameGraphics } from './interfaces/IGameGraphics';
-import { IGameObject } from './interfaces/IGameObject';
+import { IGameGraphics } from '../interfaces/IGameGraphics';
+import { IGameObject } from '../interfaces/IGameObject';
 
 
 export

@@ -1,4 +1,4 @@
-import { Circle } from "../Circle";
+import { Circle } from "../graphics/Circle";
 import { IGameObject } from "./IGameObject";
 
 export
